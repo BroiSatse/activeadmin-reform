@@ -18,6 +18,7 @@ module ActiveAdmin
         if apply_form?
           form = form_class.new(resource)
           form.prepopulate! if prepopulate_form?
+          form.deserialize(*resource_params)
           form
         else
           resource

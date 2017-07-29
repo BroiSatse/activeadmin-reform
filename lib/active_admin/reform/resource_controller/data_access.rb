@@ -11,10 +11,23 @@ module ActiveAdmin
       module DataAccess
         extend ActiveSupport::Concern
 
-        # @param _resource [ActiveRecord::Base]
-        # @return [ActiveRecord::Base, Reform::Form]
-        def apply_decorations(_resource)
-          apply_form(super)
+        def build_new_resource
+          return super unless apply_form?
+          model = scoped_collection.send method_for_build
+          form = form_class.new(model)
+          form.deserialize(*resource_params)
+          form
+        end
+
+        def find_resource
+          model = super
+          return model unless apply_form?
+          form_class.new(model)
+        end
+
+        def assign_attributes(resource, attributes)
+          return super unless apply_form?
+          resource.deserialize(*attributes)
         end
       end
 

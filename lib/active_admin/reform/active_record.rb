@@ -18,12 +18,6 @@ module ActiveAdmin
         end
       end
 
-      # @param attributes [Hash]
-      # Used here - https://github.com/activeadmin/activeadmin/blob/487f976/lib/active_admin/resource_controller/data_access.rb#L301
-      def assign_attributes(attributes)
-        deserialize(attributes)
-      end
-
       included do
         include ::Reform::Form::ModelReflections
         include ::Reform::Form::ActiveRecord
